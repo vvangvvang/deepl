@@ -1,0 +1,20 @@
+import numpy as np
+import os,time
+import net
+m = net.Sequence()
+m.add(net.Conv2D2(1,32,5,2))
+m.add(net.BatchNorm(32))
+m.add(net.Relu())
+m.add(net.Dropout(0.))
+m.add(net.Conv2D2(32,128,3,2))
+m.add(net.BatchNorm(128))
+m.add(net.Relu())
+m.add(net.Dropout(0.))
+m.add(net.Reshape((128*5*5,),'CHW'))
+m.add(net.Dense(128*5*5,512))
+m.add(net.Relu())
+m.add(net.Dropout(0.))
+m.add(net.Dense(512,10))
+m.load("model/")
+sce = net.Softmax_CrossEntropy()
+mean = net.Mean()
